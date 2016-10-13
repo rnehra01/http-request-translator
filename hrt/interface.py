@@ -77,6 +77,7 @@ class HttpRequestTranslator(object):
         # Headers
         host = ''
         header_list = []
+        host=''
         while headers_lines:
             line = headers_lines.pop(0)
             if not line.strip('\r\n'):  # Empty line? Therefore the headers are over and the content is starting.
@@ -91,6 +92,9 @@ class HttpRequestTranslator(object):
                 raise ValueError("Headers Malformed. Please Enter a Valid HTTP request.")
             if header.lower() == "host":
                 host = value.strip()  # Keep hostname for further checks
+        if not host:
+            raise ValueError("Host-Header Malformed. Please Enter a Valid HTTP request.")
+
         # Data
         data = ''
         if headers_lines:
